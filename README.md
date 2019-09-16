@@ -1,5 +1,5 @@
-# practice_of_C
-This is a sample code of C for arduino user.
+# 言語の練習
+arduinoベースでC言語をお勉強。その成果物。
 
 #### practice 1
 配列を関数の引数にするやり方
