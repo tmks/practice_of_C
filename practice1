@@ -1,0 +1,61 @@
+void fun();
+void print1(double*);
+void print2(double);
+double gret[3] = {0.0}; 
+
+void setup() {
+
+  int i;
+  Serial.begin(9600);
+
+  /* 値設定 */
+  fun();
+
+  Serial.println("出力その1");
+  for (i = 0; i < 3; i++){
+      Serial.println(gret[i]);
+  } 
+
+  Serial.println("出力その2");
+  print1(&gret[0]); /* 愚直に書くと、配列の0個目(gret[0])のアドレス */
+  
+  Serial.println("出力その3");  
+  print1(gret); /* 面倒だったら、配列そのもの(=配列0個目) */
+
+  Serial.println("出力その4");
+  print2(&gret[0]); /* 愚直に書くと、配列の0個目(gret[0])のアドレス */
+  
+  Serial.println("出力その5");  
+  print2(gret); /* 面倒だったら、並列そのもの(=配列0個目) */
+  
+  /* 以下はダメ */
+  /* print1(&gret); 配列そのもののアドレス*/
+  /* print1(gret[0]); 配列の0個目そのもの*/
+}
+
+void loop() {
+  
+}
+
+/* そもそもグローバル変数だから引数なしでも書き換えられる */
+void fun(){
+  gret[0] = 0.0;
+  gret[1] = 1.0;
+  gret[2] = 2.0;
+}
+
+void print1(double *hret){ /* 引数のポインタ */
+  int i;
+  for (i = 0; i < 3; i++){
+    hret[i] = hret[i] + 1.0;
+    Serial.println(hret[i]);
+  }
+}
+
+void print2(double hret[]){ /* hret[]って書いてもOK */
+  int i;
+  for (i = 0; i < 3; i++){
+    hret[i] = hret[i] + 1.0;
+    Serial.println(hret[i]);
+  }
+}
