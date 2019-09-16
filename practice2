@@ -1,0 +1,95 @@
+void fun();
+void print1(double*);
+void print2(double);
+double gret[3][3] = {0.0};
+
+void setup() {
+
+  int i, j;
+  Serial.begin(9600);
+
+  /* 値設定 */
+  fun();
+
+  /* 出力その１ */
+  Serial.println("出力その1");
+  for (i = 0; i < 3; i++){
+    for (j = 0; j < 3; j++){
+      Serial.println(gret[i][j]);
+    }
+  }
+
+  Serial.println("出力その2");
+  print1(&gret[0][0]); 
+  /* ↑愚直に書くと、配列の0個目(gret[0])の配列の0個目(gret[0][0])のアドレス */
+
+  Serial.println("出力その3");
+  print1(gret[0]);
+  /* ↑面倒だったら配列の0個目(gret[0])の配列そのもの */
+
+  Serial.println("出力その4");
+  print2(&gret[0][0]); 
+  /* ↑愚直に書くと、配列の0個目(gret[0])の配列の0個目(gret[0][0])のアドレス */
+
+  Serial.println("出力その5");
+  print2(gret[0]);
+  /* ↑面倒だったら配列の0個目(gret[0])の配列そのもの */
+  
+}
+
+void loop() {
+  
+}
+
+/* そもそもグローバル変数だから引数なしでも書き換えられる */
+void fun(){
+  gret[0][0] = 0.0;
+  gret[0][1] = 1.0;
+  gret[0][2] = 2.0;
+  gret[1][0] = 3.0;
+  gret[1][1] = 4.0;
+  gret[1][2] = 5.0;
+  gret[2][0] = 6.0;
+  gret[2][1] = 7.0;
+  gret[2][2] = 8.0;
+}
+
+void print1(double *hret){ /* 引数のポインタ */
+  int i, j;
+  /* 多次元配列を1次元配列とみなして */
+  for (i = 0; i < 9; i++){
+    hret[i]++;
+    Serial.println(hret[i]);
+  }
+
+  /* 以下はダメ */
+  /* 
+  Serial.println("---");
+  for (i = 0; i < 3; i++){
+    for (j = 0; j < 3; j++){
+      hret[i][j]++;
+      Serial.println(hret[i][j]);
+    }
+  }
+  */
+}
+
+void print2(double hret[]){
+  int i, j;
+  /* 多次元配列を1次元配列とみなして */
+  for (i = 0; i < 9; i++){
+    hret[i]++;
+    Serial.println(hret[i]);
+  }
+  
+  /* 以下はダメ */
+  /* 
+  Serial.println("---");
+  for (i = 0; i < 3; i++){
+    for (j = 0; j < 3; j++){
+      hret[i][j]++;
+      Serial.println(hret[i][j]);
+    }
+  }
+  */
+}
